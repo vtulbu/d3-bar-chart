@@ -15,6 +15,8 @@ export const Y = "y";
 export const G = "g";
 export const CLASS = "class";
 export const TEXT = "text";
+export const ID = "id";
+export const DATA_DATE = "data-date";
 
 //css properties
 export const TRANSFORM = "transform";

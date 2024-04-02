@@ -3,9 +3,11 @@ import "./style.css";
 import {
   BAR_WIDTH,
   CLASS,
+  DATA_DATE,
   FILL,
   G,
   HEIGHT,
+  ID,
   PADDING,
   RATIO,
   RECT,
@@ -42,24 +44,27 @@ d3.json<ChartData>(
     .data(data.data)
     .enter()
     .append(RECT)
-    .attr("data-date", (d) => d[0])
+    .attr(DATA_DATE, (d) => d[0])
     .attr("data-gdp", (d) => d[1])
     .attr(X, (_d, i) => xScale(xPeriods, (d) => d)(xPeriods[i]))
     .attr(Y, (d) => SVG_HEIGHT - PADDING - 10 - d[1] / RATIO)
     .attr(WIDTH, BAR_WIDTH)
     .attr(HEIGHT, (d) => d[1] / RATIO)
     .attr("index", (_d, i) => i)
-    .attr(FILL, CORNFLOWER_BLUE);
+    .attr(FILL, CORNFLOWER_BLUE)
+    .attr(CLASS, "bar");
 
   //create x and y axis
   svg
     .append(G)
     .attr(TRANSFORM, "translate(0, 400)")
+    .attr(ID, "x-axis")
     .call(xAxis(xPeriods, (d) => d));
 
   svg
     .append(G)
     .attr(TRANSFORM, `translate(${PADDING}, -10)`)
+    .attr(ID, "y-axis")
     .call(yAxis(yGPDValues, (d) => d));
 
   //create info text
@@ -108,7 +113,7 @@ d3.json<ChartData>(
             yGPDValues[i].toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,") +
             " Billion"
         )
-        .attr("data-date", xPeriods[i].toString())
+        .attr(DATA_DATE, xPeriods[i].toString())
         .style("left", x - RATIO + "px")
         .style("top", height - 100 + "px")
         .style("transform", "translateX(60px)");
